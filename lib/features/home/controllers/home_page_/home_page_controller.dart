@@ -18,8 +18,8 @@ class HomePageController extends _$HomePageController {
 
   @override
   HomePageControllerState build() {
-    getPosts();
     _repository = ref.read(postsRepositoryProvider);
+    getPosts();
     return const HomePageControllerState.loading();
   }
 
