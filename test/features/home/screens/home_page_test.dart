@@ -20,10 +20,11 @@ class MockHomePageController
 
 void main() {
   late MockHomePageController mockController;
-  late PostsRepository realPostsRepository;
+  late BasePostsRepository realBasePostsRepository;
+
   setUp(() {
     mockController = MockHomePageController();
-    realPostsRepository = MockPostRepository();
+    realBasePostsRepository = MockPostRepository();
   });
 
   tearDown(() {
@@ -33,10 +34,7 @@ void main() {
   Widget createWidgetUnderTest() {
     return ProviderScope(
       overrides: [
-        postsRepositoryProvider.overrideWith((ref) => realPostsRepository),
-        homePageControllerProvider.overrideWith(() {
-          return mockController;
-        }),
+        postsRepositoryProvider.overrideWith((ref) => realBasePostsRepository),
       ],
       child: const MaterialApp(
         home: HomePage(),
@@ -46,56 +44,7 @@ void main() {
 
   testWidgets('displays loading indicator when state is loading',
       (WidgetTester tester) async {
-    when(() => mockController.state)
-        .thenReturn(const HomePageControllerState.loading());
-
     await tester.pumpWidget(createWidgetUnderTest());
-
     expect(find.byType(CircularProgressIndicator), findsOneWidget);
   });
-
-//   testWidgets('displays list of posts when state is data', (WidgetTester tester) async {
-//     final posts = [
-//       Post(id: '1', content: 'Post 1'),
-//       Post(id: '2', content: 'Post 2'),
-//     ];
-//     when(() => mockController.state).thenReturn(AsyncValue.data(posts));
-
-//     await tester.pumpWidget(createWidgetUnderTest());
-
-//     expect(find.byType(ListView), findsOneWidget);
-//     expect(find.byType(PostCard), findsNWidgets(posts.length));
-//   });
-
-//   testWidgets('displays error message when state is error', (WidgetTester tester) async {
-//     when(() => mockController.state).thenReturn(const AsyncValue.error('Error message'));
-
-//     await tester.pumpWidget(createWidgetUnderTest());
-
-//     expect(find.text('Error'), findsOneWidget);
-//   });
-
-//   testWidgets('displays network error message when state is networkError', (WidgetTester tester) async {
-//     when(() => mockController.state).thenReturn(const AsyncValue.networkError());
-
-//     await tester.pumpWidget(createWidgetUnderTest());
-
-//     expect(find.text('Oops! Looks like you are not connected to the internet'), findsOneWidget);
-//   });
-
-//   testWidgets('deletes a post when delete button is tapped', (WidgetTester tester) async {
-//     final posts = [
-//       Post(id: '1', content: 'Post 1'),
-//       Post(id: '2', content: 'Post 2'),
-//     ];
-//     when(() => mockController.state).thenReturn(AsyncValue.data(posts));
-//     when(() => mockController.deletePost(any())).thenAnswer((_) async {});
-
-//     await tester.pumpWidget(createWidgetUnderTest());
-
-//     await tester.tap(find.byIcon(Icons.delete).first);
-//     await tester.pumpAndSettle();
-
-//     verify(() => mockController.deletePost(posts.first.id)).called(1);
-//   });
 }

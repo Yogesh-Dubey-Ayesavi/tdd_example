@@ -12,7 +12,7 @@ part 'home_page_controller_state.dart';
 
 @riverpod
 class HomePageController extends _$HomePageController {
-  late PostsRepository _repository;
+  late BasePostsRepository _repository;
 
   List<PostModel> _posts = <PostModel>[];
 

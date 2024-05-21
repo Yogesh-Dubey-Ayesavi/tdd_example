@@ -1,10 +1,7 @@
-import 'package:tdd_example/core/services/http_service.dart';
 import 'package:tdd_example/models/post_model/post_model.dart';
 
-abstract class PostsRepository {
-  final BaseHttpService httpService;
-
-  const PostsRepository({required this.httpService});
+abstract class BasePostsRepository {
+  const BasePostsRepository();
 
   /// Fetches a list of products.
   ///

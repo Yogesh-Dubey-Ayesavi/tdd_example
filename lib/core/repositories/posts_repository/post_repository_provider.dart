@@ -6,6 +6,6 @@ import 'package:tdd_example/core/services/http_service.dart';
 part 'post_repository_provider.g.dart';
 
 @riverpod
-PostsRepository postsRepository(PostsRepositoryRef ref) {
+BasePostsRepository postsRepository(PostsRepositoryRef ref) {
   return RealPostsRepository(httpService: DioHttpService());
 }

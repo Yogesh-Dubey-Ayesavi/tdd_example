@@ -2,12 +2,12 @@ import 'package:tdd_example/core/repositories/posts_repository/base_post_reposit
 import 'package:tdd_example/core/services/http_service.dart';
 import 'package:tdd_example/models/post_model/post_model.dart';
 
-class RealPostsRepository implements PostsRepository {
+class RealPostsRepository implements BasePostsRepository {
   RealPostsRepository({required this.httpService}) {
     _loadData();
   }
 
-  @override
+
   final BaseHttpService httpService;
   final _endpoint = '/posts';
 
